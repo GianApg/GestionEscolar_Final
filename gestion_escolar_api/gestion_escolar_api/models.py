@@ -1,0 +1,94 @@
+from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authentication import TokenAuthentication
+from django.contrib.auth.models import AbstractUser, User
+from django.conf import settings
+
+class BearerTokenAuthentication(TokenAuthentication):
+    keyword = "Bearer"
+
+# -------------------------------------------------------------
+# OPCIONES PREDEFINIDAS PARA LOS SELECTORES Y RADIO BUTTONS
+# -------------------------------------------------------------
+CATEGORIA_CHOICES = [
+    ('Tiempo Completo', 'Tiempo Completo'),
+    ('Medio Tiempo', 'Medio Tiempo'),
+    ('Hora-Clase', 'Hora-Clase'),
+]
+
+CAMPUS_CHOICES = [
+    ('CU San Manuel', 'CU San Manuel'),
+    ('CU2', 'CU2'),
+]
+
+SEXO_CHOICES = [
+    ('Masculino', 'Masculino'),
+    ('Femenino', 'Femenino'),
+    ('Prefiero no decirlo', 'Prefiero no decirlo'),
+]
+
+# -------------------------------------------------------------
+# MODELOS DE BASE DE DATOS
+# -------------------------------------------------------------
+class Administradores(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False, default=None)
+    clave_admin = models.CharField(max_length=255,null=True, blank=True)
+    telefono = models.CharField(max_length=255, null=True, blank=True)
+    rfc = models.CharField(max_length=255,null=True, blank=True)
+    edad = models.IntegerField(null=True, blank=True)
+    ocupacion = models.CharField(max_length=255,null=True, blank=True)
+    
+    # --- NUEVOS CAMPOS PROYECTO FINAL ---
+    categoria = models.CharField(max_length=255, choices=CATEGORIA_CHOICES, null=True, blank=True)
+    grado_academico = models.CharField(max_length=255, null=True, blank=True)
+    # ------------------------------------
+
+    creation = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    update = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return "Perfil del admin "+self.user.first_name+" "+self.user.last_name
+    
+class Maestros(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False, default=None)
+    id_trabajador = models.CharField(max_length=255,null=True, blank=True)
+    fecha_nacimiento = models.DateTimeField(auto_now_add=False, null=True, blank=True)
+    telefono = models.CharField(max_length=255, null=True, blank=True)
+    rfc = models.CharField(max_length=255,null=True, blank=True)
+    cubiculo = models.CharField(max_length=255,null=True, blank=True)
+    edad = models.IntegerField(null=True, blank=True)
+    area_investigacion = models.CharField(max_length=255,null=True, blank=True)
+    materias_array = models.TextField(null=True, blank=True)
+    
+    # --- NUEVOS CAMPOS PROYECTO FINAL ---
+    campus = models.CharField(max_length=255, choices=CAMPUS_CHOICES, null=True, blank=True)
+    sueldo_estimado = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True) # Ideal para dinero
+    # ------------------------------------
+
+    creation = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    update = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return "Perfil del maestro "+self.user.first_name+" "+self.user.last_name
+    
+class Alumnos(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False, default=None)
+    matricula = models.CharField(max_length=255,null=True, blank=True)
+    curp = models.CharField(max_length=255,null=True, blank=True)
+    rfc = models.CharField(max_length=255,null=True, blank=True)
+    fecha_nacimiento = models.DateTimeField(auto_now_add=False, null=True, blank=True)
+    edad = models.IntegerField(null=True, blank=True)
+    telefono = models.CharField(max_length=255, null=True, blank=True)
+    ocupacion = models.CharField(max_length=255,null=True, blank=True)
+    
+    # --- NUEVOS CAMPOS PROYECTO FINAL ---
+    direccion = models.CharField(max_length=255, null=True, blank=True)
+    sexo = models.CharField(max_length=255, choices=SEXO_CHOICES, null=True, blank=True)
+    # ------------------------------------
+
+    creation = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    update = models.DateTimeField(null=True, blank=True)

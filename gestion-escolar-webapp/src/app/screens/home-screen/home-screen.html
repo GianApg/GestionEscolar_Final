@@ -1,0 +1,24 @@
+<div class="wrapper">
+  <div class="section-home">
+    <div class="body-home">
+      <!-- Home para el admin -->
+      @if (rol === 'administrador') {
+        <section class="home-admin">
+          <app-admin-screen></app-admin-screen>
+        </section>
+      }
+      <!-- Home para el alumno -->
+      @if (rol === 'alumno') {
+        <section class="home-alumno">
+          <app-alumnos-screen></app-alumnos-screen>
+        </section>
+      }
+      <!-- Home para el maestro -->
+      @if (rol === 'maestro') {
+        <section class="home-maestro">
+          <app-maestros-screen></app-maestros-screen>
+        </section>
+      }
+    </div>
+  </div>
+</div>

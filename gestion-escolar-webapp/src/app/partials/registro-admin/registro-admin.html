@@ -1,0 +1,123 @@
+<div class="wrapper">
+  <div class="section-registro">
+    <div class="body-registro">
+      <div class="row mt-3 mb-3">
+        <div class="form-group col-12">
+          <label class="title-user" for="tipo_usuario">Ingresa los datos del administrador</label>
+        </div>
+      </div>
+      <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>ID de administrador</mat-label>
+        <input matInput [(ngModel)]="admin.clave_admin" name="clave_admin" placeholder="Escribe clave de administrador">
+      </mat-form-field>
+      @if (errors.clave_admin) {
+        <div class="invalid-feedback">{{ errors.clave_admin }}</div>
+      }
+
+      <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput [(ngModel)]="admin.first_name" name="first_name" placeholder="Escribe nombre del administrador">
+      </mat-form-field>
+      @if (errors.first_name) {
+        <div class="invalid-feedback">{{ errors.first_name }}</div>
+      }
+
+      <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>Apellidos</mat-label>
+        <input matInput [(ngModel)]="admin.last_name" name="last_name" placeholder="Escribe apellidos del administrador">
+      </mat-form-field>
+      @if (errors.last_name) {
+        <div class="invalid-feedback">{{ errors.last_name }}</div>
+      }
+
+      <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput [(ngModel)]="admin.email" name="email" placeholder="Escribe correo electrónico" [disabled]="editar">
+      </mat-form-field>
+      @if (errors.email) {
+        <div class="invalid-feedback">{{ errors.email }}</div>
+      }
+
+      @if (!editar) {
+        <mat-form-field class="mat-input" appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matInput [(ngModel)]="admin.password" name="password" [type]="inputType_1" placeholder="Escribe contraseña del administrador">
+          <mat-icon matSuffix class="eye-icon" (click)="showPassword()">{{hide_1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </mat-form-field>
+        @if (errors.password) {
+          <div class="invalid-feedback">{{ errors.password }}</div>
+        }
+
+        <mat-form-field class="mat-input" appearance="outline">
+          <mat-label>Confirmar contraseña</mat-label>
+          <input matInput [(ngModel)]="admin.confirmar_password" name="confirmar_password" [type]="inputType_2" placeholder="Confirma contraseña del administrador">
+          <mat-icon matSuffix class="eye-icon" (click)="showPwdConfirmar()">{{hide_2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </mat-form-field>
+        @if (errors.confirmar_password) {
+          <div class="invalid-feedback">{{ errors.confirmar_password }}</div>
+        }
+      }
+
+      <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input matInput [(ngModel)]="admin.telefono" mask="000-000-0000" name="telefono" placeholder="Escribe teléfono del administrador">
+      </mat-form-field>
+      @if (errors.telefono) {
+        <div class="invalid-feedback">{{ errors.telefono }}</div>
+      }
+
+      <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>RFC</mat-label>
+        <input matInput minlength="12" maxlength="13" [(ngModel)]="admin.rfc" name="rfc" placeholder="Escribe RFC del administrador">
+        <mat-hint align="end">{{admin.rfc?.length || 0}}/13</mat-hint>
+      </mat-form-field>
+      @if (errors.rfc) {
+        <div class="invalid-feedback">{{ errors.rfc }}</div>
+      }
+
+      <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>Edad</mat-label>
+        <input matInput [(ngModel)]="admin.edad" mask="00" name="edad" placeholder="Escribe edad del administrador">
+      </mat-form-field>
+      @if (errors.edad) {
+        <div class="invalid-feedback">{{ errors.edad }}</div>
+      }
+
+      <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>Ocupación</mat-label>
+        <input matInput [(ngModel)]="admin.ocupacion" name="ocupacion" placeholder="Escribe ocupación del administrador">
+      </mat-form-field>
+      @if (errors.ocupacion) {
+        <div class="invalid-feedback">{{ errors.ocupacion }}</div>
+      }
+
+      <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>Categoría</mat-label>
+        <mat-select [(ngModel)]="admin.categoria" name="categoria">
+          <mat-option value="Tiempo Completo">Tiempo Completo</mat-option>
+          <mat-option value="Medio Tiempo">Medio Tiempo</mat-option>
+          <mat-option value="Hora-Clase">Hora-Clase</mat-option>
+        </mat-select>
+      </mat-form-field>
+      @if (errors.categoria) {
+        <div class="invalid-feedback">{{ errors.categoria }}</div>
+      }
+
+      <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>Grado Académico</mat-label>
+        <input matInput [(ngModel)]="admin.grado_academico" name="grado_academico" placeholder="Ej. Licenciatura, Maestría, Doctorado">
+      </mat-form-field>
+      @if (errors.grado_academico) {
+        <div class="invalid-feedback">{{ errors.grado_academico }}</div>
+      }
+      <div class="section-buttons">
+        <button class="btn btn-danger" (click)="regresar()">Cancelar</button>
+        @if(!editar){
+          <button class="btn btn-primary" type="submit" (click)="registrar()">Registrar</button>
+        }@else{
+          <button class="btn btn-primary" type="submit" (click)="actualizar()">Actualizar</button>
+        }
+      </div>
+    </div>
+  </div>
+</div>

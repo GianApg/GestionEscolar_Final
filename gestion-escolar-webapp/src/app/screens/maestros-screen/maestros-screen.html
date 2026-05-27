@@ -1,0 +1,209 @@
+<div class="wrapper main-content-maestros">
+  <div class="header-home-maestros"></div>
+
+  <div class="body-maestros">
+    <div class="row mt-5 mb-5">
+      <div class="col-12">
+        <span class="title-perfil">
+          Bienvenido {{ name_user }}
+        </span>
+
+        <br>
+
+        <span class="title-perfil">
+          {{ rol }}
+        </span>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row mt-3 mb-5 text-center">
+        <div class="col-12">
+          <div class="alert alert-primary" role="alert">
+            <span class="title-table">
+              Lista de maestros registrados
+            </span>
+          </div>
+        </div>
+
+        <ng-container *ngIf="(lista_maestros?.length ?? 0) > 0; else noData">
+
+          <div class="table-scroll-wrapper">
+            <div class="mat-elevation-z8">
+
+              <table
+                mat-table
+                [dataSource]="dataSource"
+                style="min-width: 1200px; width: 100%;"
+              >
+
+                <!-- ID -->
+                <ng-container matColumnDef="id_trabajador">
+                  <th mat-header-cell *matHeaderCellDef>
+                    ID trabajador
+                  </th>
+
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.id_trabajador }}
+                  </td>
+                </ng-container>
+
+                <!-- Nombre -->
+                <ng-container matColumnDef="nombre">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Nombre
+                  </th>
+
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.first_name }} {{ element.last_name }}
+                  </td>
+                </ng-container>
+
+                <!-- Email -->
+                <ng-container matColumnDef="email">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Correo electrónico
+                  </th>
+
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.email }}
+                  </td>
+                </ng-container>
+
+                <!-- Fecha -->
+                <ng-container matColumnDef="fecha_nacimiento">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Fecha nacimiento
+                  </th>
+
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.fecha_nacimiento | date:'dd/MM/yyyy':'UTC' }}
+                  </td>
+                </ng-container>
+
+                <!-- Teléfono -->
+                <ng-container matColumnDef="telefono">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Teléfono
+                  </th>
+
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.telefono }}
+                  </td>
+                </ng-container>
+
+                <!-- RFC -->
+                <ng-container matColumnDef="rfc">
+                  <th mat-header-cell *matHeaderCellDef>
+                    RFC
+                  </th>
+
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.rfc }}
+                  </td>
+                </ng-container>
+
+                <!-- Cubículo -->
+                <ng-container matColumnDef="cubiculo">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Cubículo
+                  </th>
+
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.cubiculo }}
+                  </td>
+                </ng-container>
+
+                <!-- Área -->
+                <ng-container matColumnDef="area_investigacion">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Área de investigación
+                  </th>
+
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.area_investigacion }}
+                  </td>
+                </ng-container>
+
+                <!-- Campus -->
+                <ng-container matColumnDef="campus">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Campus
+                  </th>
+
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.campus }}
+                  </td>
+                </ng-container>
+
+                <!-- Sueldo -->
+                <ng-container matColumnDef="sueldo_estimado">
+                  <th mat-header-cell *matHeaderCellDef>
+                    Sueldo Est.
+                  </th>
+
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.sueldo_estimado | currency:'MXN':'symbol' }}
+                  </td>
+                </ng-container>
+
+                <!-- Editar -->
+                <ng-container matColumnDef="editar">
+                  <th mat-header-cell *matHeaderCellDef class="th-accion">
+                    Actualizar
+                  </th>
+
+                  <td mat-cell *matCellDef="let element" class="td-editar">
+                    <i
+                      class="bi bi-pencil-square"
+                      (click)="goEditar(element.id)"
+                    ></i>
+                  </td>
+                </ng-container>
+
+                <!-- Eliminar -->
+                <ng-container matColumnDef="eliminar">
+                  <th mat-header-cell *matHeaderCellDef class="th-accion">
+                    Eliminar
+                  </th>
+
+                  <td mat-cell *matCellDef="let element" class="td-eliminar">
+                    <i
+                      class="bi bi-trash3-fill"
+                      (click)="delete(element.id)"
+                    ></i>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns;"
+                ></tr>
+
+              </table>
+
+              <mat-paginator
+                [pageSizeOptions]="[5, 10, 20]"
+                showFirstLastButtons
+                aria-label="Paginación de maestros">
+              </mat-paginator>
+
+            </div>
+          </div>
+
+        </ng-container>
+
+        <ng-template #noData>
+          <div class="col-12">
+            <div class="alert alert-warning" role="alert">
+              No hay maestros registrados.
+            </div>
+          </div>
+        </ng-template>
+
+      </div>
+    </div>
+  </div>
+</div>

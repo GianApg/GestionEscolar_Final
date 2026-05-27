@@ -1,0 +1,66 @@
+<div class="wrapper main-content-admin">
+  <div class="header-home-admin">
+  </div>
+  <div class="body-admin">
+    <div class="row mt-5 mb-5">
+      <div class="col-12">
+        <span class="title-perfil">Bienvenido {{name_user}}</span>
+        <br>
+        <span class="title-perfil">Administrador</span>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row mt-3 mb-5" style="text-align: center;">
+        <div class="col-12">
+          <div class="alert alert-primary" role="alert">
+            <span class="title-table">Lista de administradores registrados</span>
+          </div>
+        </div>
+      </div>
+      @if (lista_admins.length > 0) {
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Clave Admin</th>
+                <th scope="col">Nombre Completo</th>
+                <th scope="col">Email</th>
+                <th scope="col">RFC</th>
+                <th scope="col">Ocupación</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Grado Académico</th>
+                
+                <th scope="col" class="th-accion">Actualizar</th>
+                <th scope="col" class="th-accion">Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (admin of lista_admins; track admin.id; let i = $index) {
+                <tr>
+                  <td>{{admin.clave_admin}}</td>
+                  <td>{{admin.user.first_name}} {{admin.user.last_name}}</td>
+                  <td>{{admin.user.email}}</td>
+                  <td>{{admin.rfc}}</td>
+                  <td>{{admin.ocupacion}}</td>
+                  <td>{{admin.categoria}}</td>
+                  <td>{{admin.grado_academico}}</td>
+                  
+                  <td class="td-editar"><i class="bi bi-pencil-square" (click)="goEditar(admin.id)"></i></td>
+                  <td class="td-eliminar"><i class="bi bi-trash3-fill" (click)="delete(admin.id)"></i></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }@else {
+        <div class="row">
+          <div class="col-12">
+            <div class="alert alert-warning" role="alert">
+              No hay administradores registrados.
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

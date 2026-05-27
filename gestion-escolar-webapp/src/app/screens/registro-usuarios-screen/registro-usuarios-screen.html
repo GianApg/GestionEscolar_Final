@@ -1,0 +1,73 @@
+<div class="wrapper">
+  <div class="reg-shell">
+    <!-- Selección de tipo de usuario -->
+    <mat-card class="role-card">
+      <mat-card-header class="role-card-header">
+        <div class="actions-header-colum">
+          @if (!editar) {
+          <mat-card-title class="title-card">Registro de usuario</mat-card-title>
+          <mat-card-subtitle class="subtitle-card">
+            Selecciona el tipo de usuario para mostrar el formulario correspondiente
+          </mat-card-subtitle>
+          } @else {
+          <mat-card-title class="title-card">Edición de usuario</mat-card-title>
+          <mat-card-subtitle class="subtitle-card">
+            Modifica los datos del usuario seleccionado
+          </mat-card-subtitle>
+          }
+        </div>
+        <!-- Botón para regresar al login -->
+        <div class="actions-row">
+          <button mat-icon-button class="back-btn" (click)="goBack()">
+            <mat-icon class="back-icon">arrow_back</mat-icon>
+          </button>
+        </div>
+      </mat-card-header>
+      <!-- Ahora agregamos el front del contenido de cada formulario, el cual se mostrará dependiendo del tipo de usuario seleccionado. -->
+      <mat-card-content>
+        <!-- Agregamos la sección de los radio buttons para seleccionar el tipo de usuario, y dependiendo de la selección se mostrará el formulario correspondiente. -->
+        <div class="role-row">
+          <mat-radio-group aria-label="Tipo de usuario" [(ngModel)]="user.tipo_usuario" (change)="radioChange($event)"
+            [disabled]="editar">
+
+            <!-- Radiobutton para seleccionar el tipo de usuario: Administrador -->
+            @if (!authService.getUserGroup() || authService.getUserGroup() === 'administrador') {
+            <mat-radio-button class="role-pill" value="administrador">
+              <mat-icon class="me-1" fontIcon="admin_panel_settings"></mat-icon>
+              <span class="text-radio">Administrador</span>
+            </mat-radio-button>
+            }
+            <!-- Radiobutton para seleccionar el tipo de usuario: Alumnos -->
+            <mat-radio-button class="role-pill" value="alumno">
+              <mat-icon class="me-1" fontIcon="school"></mat-icon>
+              <span class="text-radio">Alumno</span>
+            </mat-radio-button>
+            <!-- Radiobutton para seleccionar el tipo de usuario: Maestros -->
+            @if (!authService.getUserGroup() || authService.getUserGroup() === 'administrador' ||
+            authService.getUserGroup() === 'maestro') {
+            <mat-radio-button class="role-pill" value="maestro">
+              <mat-icon class="me-1" fontIcon="person"></mat-icon>
+              <span class="text-radio">Maestro</span>
+            </mat-radio-button>
+            }
+          </mat-radio-group>
+
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <!-- Aquí se mostrará el formulario dependiendo del tipo de usuario seleccionado -->
+    <div class="forms-area">
+      @if (isAdmin) {
+        <app-registro-admin [rol]="tipo_user" [datos_user]="user"></app-registro-admin>
+      }
+
+      @if (isAlumno) {
+        <app-registro-alumnos [rol]="tipo_user" [datos_user]="user"></app-registro-alumnos>
+      }
+
+      @if (isMaestro) {
+        <app-registro-maestros [rol]="tipo_user" [datos_user]="user"></app-registro-maestros>
+      }
+    </div>
+  </div>
+</div>
